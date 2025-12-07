@@ -6,6 +6,38 @@
 <body>
     <div id="pet-container">
         <img src="pet.png" id="pet-img" alt="My Pet">
+        
+        <div id="status-bubble" style="background: white; padding: 2px 5px; border-radius: 5px; font-family: sans-serif; font-size: 10px; margin-top: 5px;">
+            ...
+        </div>
     </div>
+
+    <script>
+       
+        async function checkState() {
+            const state = await pywebview.api.get_current_state();
+            
+            const img = document.getElementById('pet-img');
+            const bubble = document.getElementById('status-bubble');
+
+            bubble.innerText = "State: " + state;
+            // currently working on the same image itself 
+            if (state === 'coding') {
+                // img.src = 'work.png';
+                img.style.filter = "sepia(100%)"; 
+            } 
+            else if (state === 'music') {
+                // img.src = 'music.png';
+                img.style.filter = "hue-rotate(90deg)"; 
+            } 
+            else {
+                // img.src = 'pet.png';
+                img.style.filter = "none";
+            }
+        }
+
+        
+        setInterval(checkState, 1000);
+    </script>
 </body>
 </html>
